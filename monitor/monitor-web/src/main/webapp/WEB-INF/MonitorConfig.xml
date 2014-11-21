@@ -14,6 +14,17 @@
 		</FileMonitor>
 	</FolderMonitor>
 
+	<FolderMonitor>
+		<Name>Temp1TestFolder</Name>
+		<Path><![CDATA[/home/rolyer/temp1]]></Path>
+		<FileMonitor>
+			<File>*.xlsx</File>
+		</FileMonitor>
+		<FileMonitor>
+			<File>*.log</File>
+		</FileMonitor>
+	</FolderMonitor>
+
 	<Property name="AutoStartMonitor" value="true" />
 
 </Monitors>

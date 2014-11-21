@@ -59,9 +59,12 @@
 	</script>
 </head>
 <body>
-	<p>Add User</p>
-	<p>Account: <input type="text" id="account" /><button>Add</button></p>
-	<p>Message: ${message}</p>
-	<div id="list"></div>
+	<h1>Monitor [Total: $!{total}]:</h1>
+    <ol>
+		#foreach($m in $monitors)
+        	<li> name: ${m.name} running: ${m.running} path: ${m.file.path}</li>
+
+		#end
+	</ol>
 </body>
 </html>

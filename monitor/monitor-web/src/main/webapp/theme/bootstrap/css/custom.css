@@ -1,0 +1,9 @@
+.breadcrumb.custom {
+background-color: transparent;
+padding: 8px 0px;
+margin: 0;
+list-style: none;
+}
+.breadcrumb.custom .active {
+	color: #333;
+}
