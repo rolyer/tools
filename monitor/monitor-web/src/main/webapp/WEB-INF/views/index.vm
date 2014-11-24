@@ -1,70 +1,105 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Index</title>
-	<script type="text/javascript" src="$link.getContextPath()/js/jquery-1.11.1.js"></script>
-	<script type="text/javascript">
-		var PATH = "$link.getContextPath()";
-		
-		$(document).ready(function(){
-			load();
-			
-			$("#account").bind('keydown',function(e){
-			      if(e.keyCode==13){
-			    	  adduser();
-			      }
-		  	});
-			
-			$("button").click(function(){
-				adduser()
-			});
-		});
-		
-		function adduser() {
-			$.ajax({
-				type : "POST",
-				url : PATH + '/add.html?t=0.31572216271',
-				data : {
-					account : $('#account').val(),
-					password : "123456"
-				},
-				dataType : "json",
-				success : function(response, textStatus, xhr) {
-					if (response.success) {
-						load();
-					}
-				},
-				error : function(xhr, textStatus, errorThrown) {}
-			});
-		}
-		
-		function load() {
-			$.ajax({
-				type : "POST",
-				url : PATH + '/load.html',
-				data : {},
-				dataType : "json",
-				success : function(response, textStatus, xhr) {
-					if (response.success) {
-						var datas = response.data;
-            				$('#list').empty();
-            			for ( var i in datas) {
-            				$('#list').append("<li><a href='"+PATH+"/user_"+datas[i].id+".html'>UserId: "+datas[i].id+", Account: "+datas[i].account+"</a></li>");
-            			}
-					}
-				},
-				error : function(xhr, textStatus, errorThrown) {}
-			});
-		}
-	</script>
+    <title>Index</title>
+    <script type="text/javascript" src="$link.getContextPath()/js/jquery-1.11.1.js"></script>
+    <script type="text/javascript">
+        var PATH = "$link.getContextPath()";
+
+        function operation(name, opt, status) {
+            if (needUpdate(opt, status)) {
+                $.ajax({
+                    type: "POST",
+                    url: PATH + '/operation.html?t=' + random(),
+                    data: {
+                        name: name,
+                        operation: opt
+                    },
+                    dataType: "json",
+                    success: function (response, textStatus, xhr) {
+                        if (response.success) {
+                            window.location.reload();
+                        } else {
+                            alert("operation failed.")
+                        }
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        alert("server error.")
+                    }
+                });
+            }
+        }
+
+        function needUpdate(opt, status) {
+            if (opt == "start" && status == true) {
+                alert("It's already started.")
+                return false;
+            }
+
+            if (opt == "stop" && status == false) {
+                alert("It's already stopped.");
+                return false;
+            }
+
+            return true;
+        }
+
+        function random() {
+            var timestamp = Date.parse(new Date());
+            return timestamp;
+        }
+    </script>
 </head>
 <body>
-	<h1>Monitor [Total: $!{total}]:</h1>
-    <ol>
-		#foreach($m in $monitors)
-        	<li> name: ${m.name} running: ${m.running} path: ${m.file.path}</li>
+<section id="monitors">
+    <div class="page-header">
+        <ul class="breadcrumb custom">
+            <li><a href="#">Home</a> <span
+                    class="divider">/</span></li>
+            <li class="active">Monitors</li>
+        </ul>
+    </div>
+    <table class="table table-bordered table-striped table-hover">
+        <thead>
+        <tr>
+            <th>No.</th>
+            <th>Name</th>
+            <th>Path</th>
+            <th>Status</th>
+            <th width="100">Operation</th>
+        </tr>
+        </thead>
 
-		#end
-	</ol>
+        <tbody>
+            #foreach($m in $monitors)
+            <tr>
+                <td>$velocityCount</td>
+                <td>$m.name</td>
+                <td>${m.file.path}</td>
+                <td>
+                    #if($m.running==true)
+                        <span class="label label-success">Running</span>
+                    #else
+                        <span class="label label-important">Stopped</span>
+                    #end
+                </td>
+                <td>
+                    <div class="btn-group">
+                        <a class="btn"
+                           href="#" onclick="operation('$m.name', 'start', $m.running)">Start</a>
+                        <a class="btn dropdown-toggle" data-toggle="dropdown" href="javascript:;"><span
+                                class="caret"></span></a>
+                        <ul class="dropdown-menu" style="min-width:90px;">
+                            <li><a href="#" onclick="operation('$m.name', 'stop', $m.running)">Stop</a></li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+            #end
+        </tbody>
+    </table>
+</section>
+
+
 </body>
 </html>
