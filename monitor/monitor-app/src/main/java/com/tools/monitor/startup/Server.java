@@ -63,11 +63,14 @@ public class Server {
                 + "Manage,name=TaskExecutor");
     }
 
+    //TODO: remove monitor
+    /*
     public void removeMonitor(Monitor monitor) {
         if (monitor != null) {
             monitors.remove(monitor.getName());
         }
     }
+    */
 
     public void registerMonitor(Monitor monitor) {
 

@@ -40,10 +40,6 @@ public class Config {
         return taskExecutor;
     }
 
-    public void setTaskExecutor(TaskExecutor taskExecutor) {
-        this.taskExecutor = taskExecutor;
-    }
-
     public Properties getGlobalProperties() {
         return globalProperties;
     }

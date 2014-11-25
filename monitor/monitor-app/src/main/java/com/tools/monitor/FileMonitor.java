@@ -35,7 +35,7 @@ public class FileMonitor extends Monitor {
     }
 
     /**
-     * stop monitoring, the tailer of this monitor will be stopped also
+     * stop monitoring
      */
     @Override
     public void stop() {

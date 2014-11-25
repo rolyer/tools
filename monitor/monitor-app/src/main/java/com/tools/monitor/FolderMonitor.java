@@ -17,13 +17,10 @@ public class FolderMonitor extends Monitor implements Runnable,
 
     private static final Logger LOGGER = Logger
             .getLogger(FolderMonitor.class);
+
     private static final String THREAD_PREFIX = "FolderMonitor-";
-
     public static final long DEFAULT_INTERVAL_MILLIS = 1000L;
-    public static final long DEFAULT_LOOKBACK_MILLIS = 60000L;
-
     private long intervalMillis = DEFAULT_INTERVAL_MILLIS;
-    private long lookBackMillis = DEFAULT_LOOKBACK_MILLIS;
 
     /**
      * This list maintains the monitored files and file monitors.
@@ -104,8 +101,6 @@ public class FolderMonitor extends Monitor implements Runnable,
 
             intervalMillis = Constants.getLong(properties,
                     Constants.PROP_INTERVAL, DEFAULT_INTERVAL_MILLIS);
-            lookBackMillis = Constants.getLong(properties,
-                    Constants.PROP_LOOKBACK, DEFAULT_LOOKBACK_MILLIS);
 
             try {
 
@@ -118,7 +113,6 @@ public class FolderMonitor extends Monitor implements Runnable,
                 startTime = System.currentTimeMillis();
 
                 properties.put(Constants.PROP_INTERVAL, intervalMillis);
-                properties.put(Constants.PROP_LOOKBACK, lookBackMillis);
 
             } catch (Exception e) {
                 LOGGER.error(e.getMessage());
@@ -207,14 +201,8 @@ public class FolderMonitor extends Monitor implements Runnable,
         return interval;
     }
 
-    public long getLookBack() {
-        long interval = Constants.getLong(properties, Constants.PROP_LOOKBACK,
-                Constants.DEFAULT_INTERVAL_MILLIS);
-        return interval;
-    }
-
     /**
-     * On child file monitor stop
+     * On file monitor stop
      */
     @Override
     public void onStop(Monitor monitor) {

@@ -37,6 +37,8 @@ public class CommandLineStartup {
             CommandLineOption configOption = cmds.get("config");
 
             if(configOption==null) {
+                //LOGGER.info(System.getProperty("user.dir"));
+
                 String[] values = {"/home/rolyer/dev/tools/tools-monitor/src/main/resources/MonitorConfig.xml"};
                 configOption = new CommandLineOption("--config", values);
             }

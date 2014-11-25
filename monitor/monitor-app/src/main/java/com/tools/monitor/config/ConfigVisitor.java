@@ -36,11 +36,7 @@ public class ConfigVisitor extends VisitorSupport {
     public void read(Document document) throws ConfigException {
         Element elem = document.getRootElement();
 
-        // jms config
-//		Element nodeJMSConnection = elem.element(TAG_JMS_CONNECTION);
-//		if (null != nodeJMSConnection) {
-//			visitJMSConnection(nodeJMSConnection);
-//		}
+        //TODO: jms config
 
         // global properties
         List<Element> propertyElems = elem.elements(TAG_PROPERTY);

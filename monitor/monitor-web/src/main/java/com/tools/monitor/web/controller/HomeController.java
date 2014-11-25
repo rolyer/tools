@@ -26,20 +26,12 @@ public class HomeController extends MonitorServerSupport {
     @RequestMapping("index.html")
     public void index(ModelMap out) {
         LOGGER.debug("invoked HomeController: index");
-        out.put("message", "User List:");
 
         Server server = getServer();
-
         if (server != null) {
             monitors = new LinkedList<Monitor>(server.getMonitors().values());
 
             out.put("monitors", monitors);
-            out.put("total", monitors.size());
-
-            for (Monitor monitor : monitors) {
-                LOGGER.info("Monitor name: " + monitor.getName());
-                LOGGER.info("Monitor name: " + monitor.getFile().getPath());
-            }
         }
     }
 
@@ -59,8 +51,6 @@ public class HomeController extends MonitorServerSupport {
                     } else if ("start".equals(operation)) {
                         monitor.start();
                         result.setSuccess(true);
-                    } else {
-
                     }
                 }
             } catch (Exception e) {

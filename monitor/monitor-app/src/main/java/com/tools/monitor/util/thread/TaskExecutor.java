@@ -16,30 +16,9 @@ public class TaskExecutor extends ThreadPoolExecutor implements
 
     public TaskExecutor(int corePoolSize, int maximumPoolSize,
                         long keepAliveTime, TimeUnit unit,
-                        BlockingQueue<Runnable> workQueue, RejectedExecutionHandler handler) {
-        super(corePoolSize, maximumPoolSize, keepAliveTime, unit, workQueue,
-                handler);
-    }
-
-    public TaskExecutor(int corePoolSize, int maximumPoolSize,
-                        long keepAliveTime, TimeUnit unit,
-                        BlockingQueue<Runnable> workQueue, ThreadFactory threadFactory,
-                        RejectedExecutionHandler handler) {
-        super(corePoolSize, maximumPoolSize, keepAliveTime, unit, workQueue,
-                threadFactory, handler);
-    }
-
-    public TaskExecutor(int corePoolSize, int maximumPoolSize,
-                        long keepAliveTime, TimeUnit unit,
                         BlockingQueue<Runnable> workQueue, ThreadFactory threadFactory) {
         super(corePoolSize, maximumPoolSize, keepAliveTime, unit, workQueue,
                 threadFactory, new RejectHandler());
-    }
-
-    public TaskExecutor(int corePoolSize, int maximumPoolSize,
-                        long keepAliveTime, TimeUnit unit, BlockingQueue<Runnable> workQueue) {
-        super(corePoolSize, maximumPoolSize, keepAliveTime, unit, workQueue,
-                new RejectHandler());
     }
 
     private static class RejectHandler implements RejectedExecutionHandler {
@@ -75,11 +54,4 @@ public class TaskExecutor extends ThreadPoolExecutor implements
         return getQueue().size();
     }
 
-    public final Map<Runnable, Thread> getActiveTasks() {
-        return activeTasks;
-    }
-
-    public final Map<String, Runnable> getRecentlyRunnable() {
-        return recentlyRunnable;
-    }
 }

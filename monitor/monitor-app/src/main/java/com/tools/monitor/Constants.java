@@ -12,7 +12,6 @@ public class Constants {
 
     public static final int DEFAULT_INTERVAL_MILLIS = 250;
     public static final String PROP_INTERVAL = "PROP_INTERVAL";
-    public static final String PROP_LOOKBACK = "PROP_LOOKBACK";
     public static final String AUTO_START_MONITOR = "AutoStartMonitor";
 
     public static long getLong(Properties prop, String name, long defVal) {
